@@ -4,11 +4,20 @@
 const express = require("express");
 const https = require("https");
 const mailChimp = require("@mailchimp/mailchimp_marketing");
+const fs=require("fs");
 
 const app = express();
+var apiKey;
+try {
+  apiKey = fs.readFileSync(__dirname+'apiKey.txt', 'utf8')
+  console.log(apiKey)
+} catch (err) {
+  console.error(err)
+}
+
 
 mailChimp.setConfig({
-  apiKey: "3b762292d086f883b1b63dce46915441-us1",
+  apiKey: apiKey,
   server: "us1",
 });
 
