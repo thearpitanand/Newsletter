@@ -1,20 +1,16 @@
-// API Key : 3b762292d086f883b1b63dce46915441-us1
-// List ID : d267d29b20
-
 const express = require("express");
 const https = require("https");
 const mailChimp = require("@mailchimp/mailchimp_marketing");
-const fs=require("fs");
+const fs = require("fs");
 
 const app = express();
 var apiKey;
 try {
-  apiKey = fs.readFileSync(__dirname+'apiKey.txt', 'utf8')
-  console.log(apiKey)
+  apiKey = fs.readFileSync(__dirname + "apiKey.txt", "utf8");
+  console.log(apiKey);
 } catch (err) {
-  console.error(err)
+  console.error(err);
 }
-
 
 mailChimp.setConfig({
   apiKey: apiKey,
@@ -29,11 +25,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/signup.html");
 });
 
-app.post("/failure", (req, res)=>{
-    res.redirect("/");
-// res.sendFile(__dirname+"/signup.html");
+app.post("/failure", (req, res) => {
+  res.redirect("/");
 });
-
 
 app.post("/", function (req, res) {
   const fName = req.body.firstName;
@@ -68,6 +62,6 @@ app.post("/", function (req, res) {
   run().catch((e) => res.sendFile(__dirname + "/failure.html"));
 });
 
-app.listen(process.env.PORT||3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("Server is running on port 3000");
 });
